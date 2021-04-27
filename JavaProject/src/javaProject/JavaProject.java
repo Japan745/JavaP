@@ -29,7 +29,7 @@ public class JavaProject extends User{
 			options =Integer.parseInt(JOptionPane.showInputDialog("Enter 1. If you are a existing User.\r\n "
 			+ "Enter 2. If you are a new User.\r\n"
 			+ "Enter 0. Exit\n"));
-			if(options!=0)
+			if(options!=0 && options!=2)
 				uid = JOptionPane.showInputDialog("Enter your user id");
 			File checkUser = new File(uid);
 			if(options==1 && checkUser.exists()) 
@@ -69,7 +69,7 @@ public class JavaProject extends User{
 					}
 					else if(choice==6)
 					{
-						checkAccount();
+						checkAccount(uid);
 					}	
 					else if(choice==7)
 					{
@@ -86,7 +86,7 @@ public class JavaProject extends User{
 				User u;
 				String fname,lname,DOB,address,Email;
 				long contact_no,sin_no;
-				int acctype_choice;
+				String acctype_choice;
 				fname = JOptionPane.showInputDialog("Enter your First Name ");
 				lname = JOptionPane.showInputDialog("Enter your Last Name ");
 				address = JOptionPane.showInputDialog("Enter your address ");
@@ -94,15 +94,14 @@ public class JavaProject extends User{
 				Email  = JOptionPane.showInputDialog("Enter your Email ");
 				contact_no = Long.parseLong(JOptionPane.showInputDialog("Enter your contact no "));
 				sin_no = Long.parseLong(JOptionPane.showInputDialog("Enter your SIN no "));
-				acctype_choice = Integer.parseInt(JOptionPane.showInputDialog(""
-						+ "Enter 1. To create a saving account \n"
+				acctype_choice = JOptionPane.showInputDialog("Enter 1. To create a saving account \n"
 						+ "Enter 2. To create a current account \n"
-						+ "Enter 3. To create both "));
-				u=new User(fname,lname,address,DOB,Email,contact_no,sin_no);
+						+ "Enter 3. To create both ");
+				u=new User(fname,lname,address,DOB,Email,contact_no,acctype_choice,sin_no);
 				u.save();
 				JOptionPane.showMessageDialog(null, "Your User id : "+u.getUser_id());
 			}
-			else if(options==0)
+			else if(options==0 || options==2)
 			{
 				continue;
 			}
@@ -229,8 +228,12 @@ public class JavaProject extends User{
 		
 	}
 
-	private static void checkAccount() {
+	private static void checkAccount(String User_id) throws IOException {
 		// TODO Auto-generated method stub
+		
+		
+		User u = new User();
+		u.Account_creation(User_id);
 		
 	}
 

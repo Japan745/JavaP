@@ -4,6 +4,8 @@
 package javaProject;
 
 import java.io.BufferedReader;
+import java.util.concurrent.ThreadLocalRandom;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -25,8 +27,9 @@ public class User {
 	 * @param args
 	 */
 	//variable declarations
-	private String Fname,Lname,Address,DOB,Email;
-	private int User_id,Savings_Account, Current_Account,Saving_Account_Balance,Current_Account_Balance,Credit,Debit;
+	private String Fname,Lname,Address,DOB,Email,User_id;
+	private int Savings_Account, Current_Account,Credit,Debit;
+	private double Saving_Account_Balance,Current_Account_Balance;
 	private long SIN_no,Contact_no;
 	//constructor.
 	public User() 
@@ -36,7 +39,7 @@ public class User {
 		this.Address="";
 		this.DOB="";
 		this.Email="";
-		this.User_id=0;
+		this.User_id="";
 		this.SIN_no=0;
 		this.Contact_no=0;
 		this.Savings_Account=0;
@@ -44,18 +47,29 @@ public class User {
 		this.Saving_Account_Balance=0;
 		this.Current_Account_Balance=0;
 	}
-	public User(String Fname,String Lname,String Address, String DOB, String Email,long Contact_no, long SIN_no) 
+	public User(String Fname,String Lname,String Address, String DOB, String Email,long Contact_no, String acctype_choice,  long SIN_no) 
 	{
 		this.Fname=Fname;
 		this.Lname=Lname;
 		this.Address=Address;
 		this.DOB=DOB;
 		this.Email=Email;
-		this.User_id= (int) Math.round(Math.random()*1000000);
+		this.User_id= Fname.toLowerCase() + Lname.toLowerCase() + String.valueOf(ThreadLocalRandom.current().nextInt(100,1000));
 		this.SIN_no=SIN_no;
 		this.Contact_no=Contact_no;
-		this.Savings_Account=0;
-		this.Current_Account=0;
+		if(Integer.parseInt(acctype_choice) == 1)
+		{
+			this.Savings_Account = ThreadLocalRandom.current().nextInt(1000000,10000000);
+		}
+		else if(Integer.parseInt(acctype_choice) == 2)
+		{
+			this.Current_Account = ThreadLocalRandom.current().nextInt(1000000,10000000);
+		}
+		else if(Integer.parseInt(acctype_choice) == 3)
+		{
+			this.Savings_Account = ThreadLocalRandom.current().nextInt(1000000,10000000);
+			this.Current_Account = ThreadLocalRandom.current().nextInt(1000000,10000000);
+		}
 		this.Saving_Account_Balance=0;
 	}
 	//Getter methods for variables
@@ -74,7 +88,7 @@ public class User {
 	public String getEmail() {
 		return Email;
 	}
-	public int getUser_id() {
+	public String getUser_id() {
 		return User_id;
 	}
 	public long getSIN_no() {
@@ -84,15 +98,17 @@ public class User {
 		return Contact_no;
 	}
 	public int getSavings_Account() {
+		//System.out.println("Your Savings account no: ");
+		//return ThreadLocalRandom.current().nextInt(1000000,10000000);
 		return Savings_Account;
 	}
 	public int getCurrent_Account() {
 		return Current_Account;
 	}
-	public int getSaving_Account_Balance() {
+	public double getSaving_Account_Balance() {
 		return Saving_Account_Balance;
 	}
-	public int getCurrent_Account_Balance() {
+	public double getCurrent_Account_Balance() {
 		return Current_Account_Balance;
 	}
 	public int getCredit() {
@@ -117,7 +133,7 @@ public class User {
 	public void setEmail(String Email) {
 		 this.Email = Email;
 	}
-	public void setUser_id(int User_id) {
+	public void setUser_id(String User_id) {
 		 this.User_id = User_id;
 	}
 	public void setSIN_no(int SIN_no) {
@@ -127,15 +143,16 @@ public class User {
 		 this.Contact_no = Contact_no;
 	}
 	public void setSavings_Account(int Savings_Account) {
-		 this.Savings_Account = Savings_Account;
+		//System.out.println(getSavings_Account());
+		this.Savings_Account = Savings_Account;
 	}
 	public void setCurrent_Account(int Current_Account) {
 		 this.Current_Account = Current_Account;
 	}
-	public void setSaving_Account_Balance(int Saving_Account_Balance) {
+	public void setSaving_Account_Balance(double Saving_Account_Balance) {
 		 this.Saving_Account_Balance = Saving_Account_Balance;
 	}
-	public void setCurrent_Account_Balance(int Current_Account_Balance) {
+	public void setCurrent_Account_Balance(double Current_Account_Balance) {
 		 this.Current_Account_Balance = Current_Account_Balance;
 	}
 	public void setCredit(int Credit) {
@@ -238,8 +255,73 @@ public class User {
 	    	  JOptionPane.showMessageDialog(null,"Deposited Successfully\n\nYour Saving Balance is :" +updatedValue);
 	      }
 	}
+	
+	public void Account_creation(String User_id) throws IOException {
+		
+		  File file = new File(User_id);
+	      Scanner sc = new Scanner(file);
+	      String fileContents="";
+	      while(sc.hasNext())
+	      {
+	    	  fileContents = fileContents + sc.nextLine() +"\n";
+	      }
+	      String[] contentarr = fileContents.split("\n"); 
+	      for(String str : contentarr)
+	      {
+	    	  if(str.startsWith("Savings Account no :"))
+	    	  {
+	    		  String value = findDigitValue(str);
+	    		  if (Integer.parseInt(value)==0)
+	    		  {
+	    			  String input;
+	    			  input = JOptionPane.showInputDialog("Enter Y to create Savings Account\n Enter X to Reject");
+	    			  if(input.equals("Y"))
+	    			  {
+	    				  Update(User_id,value,String.valueOf(ThreadLocalRandom.current().nextInt(1000000,10000000)),"Savings Account no :","Savings Account no :");
+	    				  JOptionPane.showMessageDialog(null, "Savings Account Created Successfully!");
+	    			  }
+	    			  else
+	    			  {
+	    				  break;
+	    			  } 
+	    			  
+	    		  }
+	    		  else 
+	    		  {
+		    		  JOptionPane.showMessageDialog(null, "Savings Account is Already Created");
+		    	  }
+	    	  }
+	    	  else if(str.startsWith("Current Account no :"))
+		    	  {
+		    		  String value = findDigitValue(str);
+		    		  if (Integer.parseInt(value)==0 )
+		    		  {
+		    			  String input;
+		    			  input = JOptionPane.showInputDialog("Enter Y to create Current Account\n Enter X to Reject");
+		    			  if(input.equals("Y"))
+		    			  {
+		    				  Update(User_id,value,String.valueOf(ThreadLocalRandom.current().nextInt(1000000,10000000)),"Current Account no :","Current Account no :");
+		    				  JOptionPane.showMessageDialog(null, "Current Account Created Successfully!");
+		    			  }
+		    			  else
+		    			  {
+		    				  break;
+		    			  }
+		    			  
+		    		  }
+		    		  else 
+		    		  {
+			    		  JOptionPane.showMessageDialog(null, "Current Account is Already Created");
+			    	  }
+		    	  }
+	    	  
+	      }
+	      
+	}
+	
 	private String chooseType(String type) {
 		// TODO Auto-generated method stub
+		
 		
 		return null;
 	}
