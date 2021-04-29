@@ -23,7 +23,7 @@ public class JavaProject extends User{
 	
 	//TransferAmount =  is for amount to be transferred to other bank account
 	//flag = to check the beneficiary account no (0 = invalid and 1 = valid)
-	static String TransferAmount="";
+	public static String TransferAmount="";
 	static int flag=0;
 	public static void main(String[] args) throws IOException {
 		/**
@@ -158,14 +158,14 @@ public class JavaProject extends User{
 			{
 				User u = new User();
 				String newvalue = JOptionPane.showInputDialog("Enter First Name\n");
-				String type =  "First Name";
+				String type =  "First Name : ";
 				u.Update(uid, newvalue, newvalue, type, type);
 				JOptionPane.showMessageDialog(null, "First Name Updated Successfully");
 			}else if(edit==2)
 			{
 				User u = new User();
 				String newvalue = JOptionPane.showInputDialog("Enter new Last Name\n");
-				String type =  "Last Name";
+				String type =  "Last Name : ";
 				u.Update(uid, newvalue, newvalue, type, type);
 				JOptionPane.showMessageDialog(null, "Last Name Updated Successfully");
 				
@@ -283,7 +283,7 @@ public class JavaProject extends User{
 
 	private static void moneyTransfer(String User_id) throws IOException {
 		/**
-		 * Methods will help user to tranfer money to beneficiary account
+		 * Methods will help user to transfer money to beneficiary account
 		 */
 		String BeneficiaryAccNo = JOptionPane.showInputDialog("Enter Beneficiary Account no :\n");
 		File directory = new File("C://Users//Japan Patel//Desktop//JProject//JavaP//JavaProject");
@@ -339,12 +339,12 @@ public class JavaProject extends User{
 			{
 				if(str.startsWith("First Name : "))
 				{
-					String[] name = str.split(":");
+					String[] name = str.split(":",0);
 					fname = name[1];
 				}
 				if(str.startsWith("Last Name : "))
 				{
-					String[] name = str.split(":");
+					String[] name = str.split(":",0);
 					lname = name[1];
 				}
 				if(str.startsWith("Savings Account no :"))
@@ -369,18 +369,19 @@ public class JavaProject extends User{
 				{
 					if(flagSavingBal==1 && Integer.parseInt(val1)!=0)
 					{
-						storeSavingBal = str;
+						storeSavingBal = finddigit(str);
 					}
 				}
 				if(str.startsWith("Current Account Balance :"))
 				{
 					if(flagCurrentBal==1 && Integer.parseInt(val2)!=0)
 					{
-						storeCurrentBal = str;
+						storeCurrentBal = finddigit(str);
 					}
 				}
 			
 			}
+			//beneficiary saving acc
 			if(flagSavingBal==1)
 			{
 				Decision = JOptionPane.showInputDialog("--------Beneficiary User Details---------"
@@ -388,15 +389,19 @@ public class JavaProject extends User{
 						+"\n Account no : "+ val1
 						+"\n Press Y To continue transaction..."
 						+"\n Press X To abort transaction...");
-				if(Decision.equalsIgnoreCase("y"))
+				if(Decision.equals("y"))
 				{
 					drawMoney(user_id);
-					u.Update(user_id, storeSavingBal,TransferAmount, "Saving Account Balance :","deposit");
+					int amount=0;
+					amount= Integer.parseInt(TransferAmount) -3;
+					TransferAmount = String.valueOf(amount);
+					u.Update(filename, storeSavingBal,TransferAmount, "Saving Account Balance :","deposit");
 					JOptionPane.showMessageDialog(null,"Money Tansfer Successfull");
 				}else {
 					JOptionPane.showMessageDialog(null,"Money Tansfer Transaction Aborted");
 				}
 			}
+			//beneficiary current acc
 			if(flagCurrentBal==1)
 			{
 				Decision = JOptionPane.showInputDialog("--------Beneficiary User Details---------"
@@ -404,10 +409,13 @@ public class JavaProject extends User{
 						+"\n Account no : "+val2
 						+"\n Press Y To continue transaction..."
 						+"\n Press X To abort transaction...");
-				if(Decision.equalsIgnoreCase("y"))
+				if(Decision.equals("y"))
 				{
 					drawMoney(user_id);
-					u.Update(user_id, storeCurrentBal,TransferAmount, "Current Account Balance :","deposit");
+					int amount=0;
+					amount= Integer.parseInt(TransferAmount) -3;
+					TransferAmount = String.valueOf(amount);
+					u.Update(filename, storeCurrentBal,TransferAmount, "Current Account Balance :","deposit");
 					JOptionPane.showMessageDialog(null,"Money Tansfer Successfull");
 				}
 				else

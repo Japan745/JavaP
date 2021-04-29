@@ -1,12 +1,12 @@
 User ID : akshaypatel808
-First Name :Akshay
-Last Name :Patel
+First Name : Akshay
+Last Name : Patel
 Address : AADDRREESS
 DOB : 18051998
 Contact no : 987012765
 Savings Account no : 0
 Current Account no : 2452242
-Saving Account Balance : 0.0
-Current Account Balance : 0.0
+Saving Account Balance : 0
+Current Account Balance : 4000
 SIN no : 90876542
 

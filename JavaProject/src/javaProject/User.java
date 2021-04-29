@@ -60,8 +60,8 @@ public class User {
 		this.Contact_no=0;
 		this.Savings_Account=0;
 		this.Current_Account=0;
-		this.Saving_Account_Balance=0.0;
-		this.Current_Account_Balance=0.0;
+		this.Saving_Account_Balance=0;
+		this.Current_Account_Balance=0;
 	}
 	
 	public User(String Fname,String Lname,String Address, String DOB, String Email,long Contact_no, String acctype_choice,  long SIN_no) 
