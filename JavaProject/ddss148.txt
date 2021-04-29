@@ -4,9 +4,9 @@ Last Name : ss
 Address : defee
 DOB : 31021999
 Contact no : 3434343434
-Savings Account no : 2696607
-Current Account no : 3637206
-Saving Account Balance : 1134446
-Current Account Balance : 18596
+Savings Account no : 2695898
+Current Account no :0
+Saving Account Balance : 1135746
+Current Account Balance :0
 SIN no : 4343
 

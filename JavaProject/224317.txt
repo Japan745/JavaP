@@ -6,7 +6,7 @@ DOB : 23041998
 Contact no : 2323234343
 Savings Account no : 5442736
 Current Account no :7331550
-Saving Account Balance : 0
-Current Account Balance : 0
+Saving Account Balance : 5000300
+Current Account Balance :15000
 SIN no : 3434
 

@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-import javax.swing.JOptionPane;
 
 
 /**
@@ -41,8 +40,8 @@ public class User {
 	//sin_no = store sin no of user
 	
 	private String Fname,Lname,Address,DOB,Email,User_id;
-	private int Savings_Account, Current_Account;
-	private double Saving_Account_Balance,Current_Account_Balance;
+	private int Savings_Account, Current_Account,Saving_Account_Balance,Current_Account_Balance;;
+	//private double 
 	private long SIN_no,Contact_no;
 	
 	public User() 
@@ -80,9 +79,11 @@ public class User {
 		if(Integer.parseInt(acctype_choice) == 1)
 		{
 			this.Savings_Account = ThreadLocalRandom.current().nextInt(1000000,10000000);
+			this.Current_Account = 0;
 		}
 		else if(Integer.parseInt(acctype_choice) == 2)
 		{
+			this.Savings_Account = 0;
 			this.Current_Account = ThreadLocalRandom.current().nextInt(1000000,10000000);
 		}
 		else if(Integer.parseInt(acctype_choice) == 3)
@@ -91,6 +92,8 @@ public class User {
 			this.Current_Account = ThreadLocalRandom.current().nextInt(1000000,10000000);
 		}
 		this.Saving_Account_Balance=0;
+		this.Current_Account_Balance=0;
+		//this.Saving_Account_Balance=0;
 	}
 	//Getter methods for variables
 	public String getFname() {
@@ -161,10 +164,10 @@ public class User {
 	public void setCurrent_Account(int Current_Account) {
 		 this.Current_Account = Current_Account;
 	}
-	public void setSaving_Account_Balance(double Saving_Account_Balance) {
+	public void setSaving_Account_Balance(int Saving_Account_Balance) {
 		 this.Saving_Account_Balance = Saving_Account_Balance;
 	}
-	public void setCurrent_Account_Balance(double Current_Account_Balance) {
+	public void setCurrent_Account_Balance(int Current_Account_Balance) {
 		 this.Current_Account_Balance = Current_Account_Balance;
 	}
 	
@@ -180,6 +183,7 @@ public class User {
 		pw.println("Last Name : "+this.Lname);
 		pw.println("Address : "+this.Address);
 		pw.println("DOB : "+this.DOB);
+		pw.println("Email : "+this.Email);
 		pw.println("Contact no : "+String.valueOf(this.Contact_no));
 		pw.println("Savings Account no : "+String.valueOf(this.Savings_Account));
 		pw.println("Current Account no : "+String.valueOf(this.Current_Account));
@@ -259,79 +263,6 @@ public class User {
 	      pw.close();
 	}
 	
-	public void Account_creation(String User_id) throws IOException {
-		/**
-		 * Method helps to create a user account
-		 */
-		
-		  File file = new File(User_id);
-	      Scanner sc = new Scanner(file);
-	      String fileContents="";
-	      while(sc.hasNext())
-	      {
-	    	  fileContents = fileContents + sc.nextLine() +"\n";
-	      }
-	      String[] contentarr = fileContents.split("\n"); 
-	      for(String str : contentarr)
-	      {
-	    	  if(str.startsWith("Savings Account no :"))
-	    	  {
-	    		  String value = findDigitValue(str);
-	    		  if (Integer.parseInt(value)==0)
-	    		  {
-	    			  String input;
-	    			  input = JOptionPane.showInputDialog("Enter Y to create Savings Account\n Enter X to Reject");
-	    			  if(input.equals("Y"))
-	    			  {
-	    				  Update(User_id,value,String.valueOf(ThreadLocalRandom.current().nextInt(1000000,10000000)),"Savings Account no :","Savings Account no :");
-	    				  JOptionPane.showMessageDialog(null, "Savings Account Created Successfully!");
-	    			  }
-	    			  else
-	    			  {
-	    				  break;
-	    			  } 
-	    			  
-	    		  }
-	    		  else 
-	    		  {
-		    		  JOptionPane.showMessageDialog(null, "Savings Account is Already Created");
-		    	  }
-	    	  }
-	    	  else if(str.startsWith("Current Account no :"))
-		    	  {
-		    		  String value = findDigitValue(str);
-		    		  if (Integer.parseInt(value)==0 )
-		    		  {
-		    			  String input;
-		    			  input = JOptionPane.showInputDialog("Enter Y to create Current Account\n Enter X to Reject");
-		    			  if(input.equals("Y"))
-		    			  {
-		    				  Update(User_id,value,String.valueOf(ThreadLocalRandom.current().nextInt(1000000,10000000)),"Current Account no :","Current Account no :");
-		    				  JOptionPane.showMessageDialog(null, "Current Account Created Successfully!");
-		    			  }
-		    			  else
-		    			  {
-		    				  break;
-		    			  }
-		    			  
-		    		  }
-		    		  else 
-		    		  {
-			    		  JOptionPane.showMessageDialog(null, "Current Account is Already Created");
-			    	  }
-		    	  }
-	    	  
-	      }
-	      sc.close();
-	      
-	}
-	
-	/*private String chooseType(String type) {
-		
-		
-		return null;
-	}*/
-	
 	private String findDigitValue(String fileData) {
 		/**
 		 * Method will identify the digit in string and returns digit in a string format
@@ -345,7 +276,6 @@ public class User {
 				sb.append(ch);
 			}
 		}
-		//System.out.println("the digit is :"+sb.toString());
 		return sb.toString();
 	}
 }

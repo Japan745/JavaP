@@ -6,6 +6,7 @@ DOB : 30081999
 Contact no : 4545454545
 Savings Account no : 8994272
 Current Account no : 5438472
-Saving Account Balance : 0
-Current Account Balance : 0
+Saving Account Balance : 4797
+Current Account Balance : 5697
 SIN no : 343434
+
