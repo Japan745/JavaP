@@ -3,8 +3,11 @@
  */
 package javaProject;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 //import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
@@ -111,6 +114,8 @@ public class JavaProject extends User{
 				String fname,lname,DOB,address,Email;
 				long contact_no,sin_no;
 				String acctype_choice;
+				ArrayList<String> UserList = new ArrayList<String>();
+				
 				fname = JOptionPane.showInputDialog("Enter your First Name ");
 				lname = JOptionPane.showInputDialog("Enter your Last Name ");
 				address = JOptionPane.showInputDialog("Enter your address ");
@@ -123,6 +128,19 @@ public class JavaProject extends User{
 						+ "Enter 3. To create both ");
 				u=new User(fname,lname,address,DOB,Email,contact_no,acctype_choice,sin_no);
 				u.save();
+				
+				UserList.add("User name : "+(fname+" "+lname)+" User_ID : "+u.getUser_id());
+				System.out.println(UserList);
+				
+				File file =  new File("UserData.txt");
+				FileWriter fw = new FileWriter(file,true);
+				
+				BufferedWriter bw = new BufferedWriter(fw);
+				bw.write("\n"+UserList.get(0));
+				//fw.append(UserList.get(0));
+				bw.close();
+				fw.close();
+				
 				JOptionPane.showMessageDialog(null, "Your User id : "+u.getUser_id());
 			}
 			else if(options==0 || options==2)
@@ -168,14 +186,14 @@ public class JavaProject extends User{
 							flagCurrentBal=1;
 					 }
 				}
-				if(str.startsWith("Saving Account Balance : "))
+				if(str.startsWith("Saving Account Balance :"))
 				{
 					if(flagSavingBal==1)
 					{
 						storeSavingBal = finddigit(str);
 					}
 				}
-				if(str.startsWith("Current Account Balance : "))
+				if(str.startsWith("Current Account Balance :"))
 				{
 					if(flagCurrentBal==1)
 					{
@@ -211,8 +229,8 @@ public class JavaProject extends User{
 					if(confirm.equalsIgnoreCase("y"))
 					{
 						User u = new User();
-						u.Update(uid, storeCurrentaccno, "0", "Current Account no : ", "delete");
-						u.Update(uid, storeCurrentBal, "0", "Current Account Balance : ", "delete");
+						u.Update(uid, storeCurrentaccno, "0", "Current Account no :", "delete");
+						u.Update(uid, storeCurrentBal, "0", "Current Account Balance :", "delete");
 						JOptionPane.showMessageDialog(null, "You Successfully deleted your Current Account");
 					}
 					else
@@ -223,7 +241,7 @@ public class JavaProject extends User{
 				else if(Integer.parseInt(choice)==3)
 				{
 					String confirm =  JOptionPane.showInputDialog("Are you sure you want to delete your accounts."
-							+"Enter Y. To confirm \n Enter X. To Discard");
+							+"\nEnter Y. To confirm \n Enter X. To Discard");
 					if(confirm.equalsIgnoreCase("y"))
 					{
 						file.delete();
@@ -241,7 +259,7 @@ public class JavaProject extends User{
 			else if(flagSavingBal==1)
 			{
 				String confirm =  JOptionPane.showInputDialog("Are you sure you want to delete your Saving account."
-						+"Enter Y. To confirm \n Enter X. To Discard");
+						+"\nEnter Y. To confirm \n Enter X. To Discard");
 				if(confirm.equalsIgnoreCase("y"))
 				{
 						file.delete();
@@ -255,7 +273,7 @@ public class JavaProject extends User{
 			else if(flagCurrentBal==1)
 			{
 				String confirm =  JOptionPane.showInputDialog("Are you sure you want to delete your Current account."
-						+"Enter Y. To confirm \n Enter X. To Discard");
+						+"\nEnter Y. To confirm \n Enter X. To Discard");
 				if(confirm.equalsIgnoreCase("y"))
 				{
 					file.delete();
@@ -417,7 +435,7 @@ public class JavaProject extends User{
 		 * Methods will help user to transfer money to beneficiary account
 		 */
 		String BeneficiaryAccNo = JOptionPane.showInputDialog("Enter Beneficiary Account no :\n");
-		File directory = new File("C://Users//Japan Patel//Desktop//JProject//JavaP//JavaProject");
+		File directory = new File("C://Users//Admin//Desktop//JProject//JavaP//JavaProject");
 		File files[] = null;
         if(directory.isDirectory())
         {
@@ -846,7 +864,7 @@ public class JavaProject extends User{
 						 flagSavingBal=1;
 					 }
 				}
-				if(str.startsWith("Current Account no : "))
+				if(str.startsWith("Current Account no :"))
 				{
 					 storeCurrentaccno = finddigit(str);
 					 if(Integer.parseInt(storeCurrentaccno)!=0)
@@ -861,7 +879,7 @@ public class JavaProject extends User{
 						storeSavingBal=finddigit(str);
 					}
 				}
-				if(str.startsWith("Current Account Balance : "))
+				if(str.startsWith("Current Account Balance :"))
 				{
 					if(flagCurrentBal==1)
 					{
@@ -887,7 +905,7 @@ public class JavaProject extends User{
 				{
 					int amount=0;
 					String creditAmount= JOptionPane.showInputDialog("Enter credit amount");
-					u.Update(User_id, storeCurrentBal, creditAmount,"Current Account Balance : ", "deposit");
+					u.Update(User_id, storeCurrentBal, creditAmount,"Current Account Balance :", "deposit");
 					amount = Integer.parseInt(creditAmount) + Integer.parseInt(storeCurrentBal);
 					JOptionPane.showMessageDialog(null,"You Successfully deposited \n Current Balance is : $"+String.valueOf(amount));
 				}
@@ -907,7 +925,7 @@ public class JavaProject extends User{
 			{
 					int amount=0;
 					String creditAmount= JOptionPane.showInputDialog("Enter credit amount"); 
-					u.Update(User_id, storeCurrentBal, creditAmount,"Current Account Balance : ", "deposit");
+					u.Update(User_id, storeCurrentBal, creditAmount,"Current Account Balance :", "deposit");
 					amount = Integer.parseInt(creditAmount)+Integer.parseInt(storeCurrentBal);
 					JOptionPane.showMessageDialog(null,"You Successfully deposited \n Current Balance is : $"+String.valueOf(amount));
 			}
